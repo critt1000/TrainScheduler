@@ -4,13 +4,23 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>TrainScheduler</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous" />
     
+    <!-- Bootstrap Link -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous" >
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    <!-- Firebase Link -->
     <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/main.css" />
+    
+    <!-- Link to Moment.js should go here -->
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
+    <!-- External CSS Link -->
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" >
 
 </head>
 
@@ -39,6 +49,7 @@
                             <th scope="col">Frequency(Min)</th>
                             <th scope="col">Next Arrival</th>
                             <th scope="col">Minutes Away</th>
+                            <th scope="col">First Arrival</th>
                             
                         </tr>
                     </thead>
@@ -66,11 +77,11 @@
                     </div>
                     <div class="form-group">
                         <label for="startDate">First Train Time (HH:mm)</label>
-                        <input type="time" class="form-control" id="firstTime" placeholder="17:00">
+                        <input type="text" class="form-control" id="firstTime" placeholder="Enter First Train Arrival in (HH:mm) format">
                     </div>
                     <div class="form-group">
                         <label for="monthlyRate">Frequency (in Minutes)</label>
-                        <input type="number" class="form-control" id="frequency" placeholder="10">
+                        <input type="number" class="form-control" id="frequency" placeholder="Enter minutes between depature and arrival of next train">
                     </div>
 
                     <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
@@ -81,9 +92,6 @@
 
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-
-    <!-- Link to Moment.js should go here -->
-    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
     
     <!-- Link to External Javascript File -->
     <script src="assets/javascript/app.js"></script>
