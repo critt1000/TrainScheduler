@@ -19,6 +19,14 @@ var firstArrival = "";
 var nextArrival = "";
 var minutesAway = 0;
 
+//function that calculates firstArrival and nextArrival
+// function calcData() {
+//   var difTime = moment().dif(moment(firstArrival), "minutes");
+//   var modTime = difTime % frequency;
+//   minutesAway = frequency - modTime;
+//   nextArrival = moment().add(minutesAway, "minutes");
+// }
+
 // Button Click function
 $('#submitBtn').on('click', function (event) {
   event.preventDefault();
@@ -29,16 +37,15 @@ $('#submitBtn').on('click', function (event) {
   frequency = $('#frequency').val().trim();
   firstArrival = $('#firstTime').val().trim();
 
+
   // Calculate nextArrival and minutesAway
-  /*
-  function calcData() {
-  var difTime = moment().dif(moment(firstArrival), "minutes");
-  var modTime = difTime % frequency;
+  var firstArrivalConverted = moment(firstArrival, "HH:mm").subtract(1, "years");
+  var diffTime = moment().diff(moment(firstArrivalConverted), "minutes");
+  var modTime = diffTime % frequency;
   minutesAway = frequency - modTime;
   nextArrival = moment().add(minutesAway, "minutes");
-  
-  }
-  */
+
+
 
   // Push Data to Database
   database.ref().push({
@@ -46,16 +53,18 @@ $('#submitBtn').on('click', function (event) {
     destination: destination,
     frequency: frequency,
     firstArrival: firstArrival,
-    
+    minutesAway: minutesAway,
+    nextArrival: nextArrival.toLocaleString(),
     dateAdded: firebase.database.ServerValue.TIMESTAMP
   });
 
 });
 
 // add firebase watcher
-database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function (snapshot) {
+database.ref().on("child_added", function (snapshot) {
 
   var sv = snapshot.val();
+  var nextArrivalReformatted = moment(sv.nextArrival).format("HH:mm");
 
   // DONE: log the data from the database
   console.log(sv.trainName);
@@ -65,15 +74,17 @@ database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", functi
   console.log(sv.minutesAway);
   console.log(sv.firstArrival);
 
-  // DONE: push the new stuff to the HTML
+  // Push the new stuff to the HTML
+  // Showing an incorrect nextArrival time -------- Needs Rework
+
   var html =
     '<tr class="something">' +
     '<td>' + sv.trainName + '</td>' +
     '<td>' + sv.destination + '</td>' +
     '<td>' + sv.frequency + '</td>' +
-    '<td>' + sv.nextArrival + '</td>' +
-    '<td>$ ' + sv.minutesAway + '</td>' +
-    '<td>$ ' + sv.firstArrival + '</td>' +
+    '<td>' + nextArrivalReformatted + '</td>' +
+    '<td>' + sv.minutesAway + '</td>' +
+    '<td>' + sv.firstArrival + '</td>' +
     '</tr>';
 
   $('#outPutRow').append(html);
